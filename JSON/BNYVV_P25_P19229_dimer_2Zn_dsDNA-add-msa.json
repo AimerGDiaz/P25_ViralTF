@@ -1,0 +1,35 @@
+[
+    {
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "MGDILGAVYDLGHRPYLARRTVYEDRLILSTHGNICRAINLLTHDNRTTLVYHNNTKRIRFRGLLCALHGPYCGFRALCRVMLCSLPRLCDIPINGSRDFVADPTRLDSSVNELLVSNGLVIHYDRVHHVPLHTDGFEVVDFTTVFRGPGNFLLPNATNFPRPTTTDQVYMVCLVNTVNCVLRFESELTVWVHSGLYTGDVLDVDNNVIQAPDGVDDDG",
+                    "count": 2,
+                    "msa": {
+                        "precomputed_msa_dir": "/cfs/klemming/projects/supr/naiss2023-23-555/Protenix/BNYVV_P25_P19229/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA/msa_resmsa_seq_0/0",
+                        "pairing_db": "uniref100"
+                    }
+                }
+            },
+            {
+                "dnaSequence": {
+                    "sequence": "TTCGTGGCCGGAAAGAGGCAAAAGAAGACTAGCTTACACCTCATGGGGGTCAAGCAAGAGAAGAATGAAAGTCTAGCCGACTACATAAAAAGA",
+                    "count": 1
+                }
+            },
+            {
+                "dnaSequence": {
+                    "sequence": "TCTTTTTATGTAGTCGGCTAGACTTTCATTCTTCTCTTGCTTGACCCCCATGAGGTGTAAGCTAGTCTTCTTTTGCCTCTTTCCGGCCACGAA",
+                    "count": 1
+                }
+            },
+            {
+                "ion": {
+                    "ion": "ZN",
+                    "count": 2
+                }
+            }
+        ],
+        "name": "Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA"
+    }
+]

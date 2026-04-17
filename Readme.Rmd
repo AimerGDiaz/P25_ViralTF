@@ -147,281 +147,589 @@ make_strip <- function(df_row, row_name, high_col, show_x = FALSE,length, label_
 
   p
 }
+
+df_to_rmd_table <- function(df,print_table = TRUE) { 
+  
+  header <- paste0("| ", paste(names(df), collapse = " | "), " |")
+  align  <- paste0("| ", paste(rep("---", ncol(df)), collapse = " | "), " |")
+  body <- apply(df, 1, function(row) paste0("| ", paste(row, collapse = " | "), " |"))
+
+  md <- paste(c(header, align, body), collapse = "\n")
+
+  if (print_table) cat(md, "\n")
+} 
 ```
 
-UDP-glycosyltransferases (UGTs) are versatile plant enzymes that can detoxify endogenous and exogenous small molecules through glycosylation, thereby modulating their bioactivity, mobility, and compartmentation. Structural studies of cereal UGTs involved in trichothecene detoxification have shown that these enzymes adopt the canonical GT-B fold, with a conserved donor-binding region for UDP-sugars and a more variable acceptor pocket that determines substrate selectivity. In particular, the rice enzyme Os79 was solved in complex with UDP-2-fluoro-2-deoxy-D-glucose and the trichothecene scaffold @wetterhorn2016crystal, providing a structural framework for how plant UGTs may recognize trichothecene-like fungal metabolites. Based on this rationale, we complemented the transcriptome-guided candidate UGT89B1 with Protenix structural modeling and protein-ligand docking @bytedance2025protenix to examine whether the red clover UGT identified here contains a donor-binding architecture compatible with UDP-sugar recognition and an acceptor pocket able to accommodate a [trichothecene-like](https://www.rcsb.org/ligand/7E0) fungal compound 
+# Zinc-Coordinatin DNA Binding Domain
 
-# Protenix docking 
+[Among the ten super classes of defined DBDs](https://genexplain.com/what-are-transcription-factors/), by far the largest is Superclass 2 (zinc-coordinating DBDs) to which 53% of all Human TF genes belong to, followed by helix-turn-helix (26%) and basic domain factor genes (11%). These three super classes have in common that an α-helix is exposed in such a way that it binds into the major groove of the DNA @wingender2013tfclass. 
+
+::: {style="text-align: center;"}
+<figure>
+```{=html}
+<img src="Figures/9DBDs.jpeg" style="width: 100%;
+height: 100%"/>
+```
+<figcaption style="margin-top: 10px;">
+
+<strong>Relative sizes of human TF superclasses. The distribution of TF genera among the 10 superclasses, with the percentages indicated</strong>
+
+</figcaption>
+</figure>
+<a name="9DBDs.jpeg"></a>
+:::
+
+# Other models 
+
+```{r, eval=FALSE}
+ViralTFs_BNYVV_P25_models<- read.csv("Results/ViralTFs_BNYVV_P25_models.csv", header = T)
+ViralTFs_BNYVV_P25_models$models <- gsub("ViralTFs_BNYVV_P25_","",ViralTFs_BNYVV_P25_models$models)
+df_to_rmd_table(ViralTFs_BNYVV_P25_models)
+```
+| models | has_clash | ptm | iptm | ranking_score | num_recycles | fraction_disordered |
+| --- | --- | --- | --- | --- | --- | --- |
+| ssDNA_4 | 0 | 0.63 | 0.29 |  0.39 | 10.00 | 0.06 |
+| ssDNA_3 | 0 | 0.64 | 0.34 |  0.42 | 10.00 | 0.04 |
+| dimer_dsDNA_1 | 0 | 0.25 | 0.39 | 61.09 |  0.28 | 1.93 |
+| dimer_dsDNA_2 | 0 | 0.22 | 0.39 | 60.45 |  0.26 | 1.90 |
+| dimer_dsDNA_3 | 0 | 0.22 | 0.39 | 60.86 |  0.25 | 1.92 |
+| dimer_dsDNA_4 | 0 | 0.20 | 0.39 | 60.86 |  0.24 | 1.92 |
+| ssDNA_2 | 0 | 0.63 | 0.39 |  0.44 | 10.00 | 0.01 |
+| dimer_dsDNA_0 | 0 | 0.26 | 0.40 | 61.69 |  0.29 | 1.91 |
+| ssDNA_1 | 0 | 0.69 | 0.42 |  0.47 | 10.00 | 0.00 |
+| ssDNA_0 | 0 | 0.72 | 0.60 |  0.62 | 10.00 | 0.00 |
+| monomer_1Zn_dsDNA_4 | 0 | 0.51 | 0.75 | 86.50 |  0.56 | 0.55 |
+| dimer_2Zn_ssDNA_4 | 0 | 0.70 | 0.80 | 64.00 |  0.72 | 0.71 |
+| dimer_2Zn_dsDNA_4 | 0 | 0.73 | 0.82 | 69.00 |  0.75 | 0.59 |
+| dimer_2Zn_ssDNA_3 | 0 | 0.73 | 0.82 | 64.00 |  0.75 | 0.69 |
+| dimer_2Zn_ssDNA_2 | 0 | 0.74 | 0.82 | 63.25 |  0.75 | 0.67 |
+| dimer_2Zn_ssDNA_1 | 0 | 0.74 | 0.82 | 63.25 |  0.76 | 0.69 |
+| dimer_2Zn_dsDNA_3 | 0 | 0.74 | 0.82 | 70.50 |  0.76 | 0.61 |
+| dimer_2Zn_ssDNA_0 | 0 | 0.75 | 0.83 | 64.50 |  0.77 | 0.69 |
+| monomer_1Zn_dsDNA_3 | 0 | 0.87 | 0.88 | 88.50 |  0.87 | 0.37 |
+| monomer_1Zn_dsDNA_2 | 0 | 0.88 | 0.89 | 89.00 |  0.88 | 0.38 |
+| dimer_2Zn_dsDNA_2 | 0 | 0.85 | 0.89 | 70.00 |  0.86 | 0.50 |
+| monomer_1Zn_dsDNA_0 | 0 | 0.89 | 0.89 | 89.50 |  0.89 | 0.36 |
+| monomer_1Zn_dsDNA_1 | 0 | 0.89 | 0.90 | 88.00 |  0.89 | 0.37 |
+| dimer_2Zn_dsDNA_1 | 0 | 0.86 | 0.90 | 71.00 |  0.87 | 0.47 |
+| dimer_2Zn_dsDNA_0 | 0 | 0.92 | 0.93 | 72.50 |  0.92 | 0.42 | 
+
+Correct ! 
+# Dimeric P25 binding to 93dsDNA and 2Zn²⁺
+
+::: {style="text-align: center;"}
+<figure>
+```{=html}
+<img src="Figures/ViralTFs_BNYVV_P25_Dimer_93bpDNA.gif" style="width: 100%;
+height: 100%"/>
+```
+<figcaption style="margin-top: 10px;">
+
+<strong>Contact probability of P25 dimer binding to 2 Zn²⁺ions and 93bp dsDNA, model 1</strong>
+
+</figcaption>
+</figure>
+<a name="Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_cprob_m1.png"></a>
+:::
 
 ## Json files 
 
-The enzyme UGT89B1 sequence used for strucutral modeling
+The Viral TF P25 sequence used for structural modeling
 
 ```
->TpUGT89B1
-MSIPQTHLIAYPFPTSGHIIPLIDLTKNLITRNINVTVLLTPSNQHLLPPNYSPLLQTLVLPSPQFPNPNQNRLIATITFMHQHHYPIILQWARVHHLPPSAIISDFFLGWTHLLARDLDVPRLVFSPSGAFALSISFSLWRDLPQNDNPDDPNSVVSFPNLPNSPFYPWWQISHLFRDKKVEQDWEMMRTMFLFNLDAWGVVFNSFIDLEPAYFDHIKKELGHERVWAVGPVLPLDSGTEPEERGEASTVSCLELTTWLDKREDRSVVYVCFGSRTFLTTAEMDVLTSALELSGVHFILSVRVPDERRVEEDCGKISSGFIERVRERGFVIQGWASQLVILGHRAVGAFLTHCGWNSVLEGLVSGVVMLTWPMGADQYTNAKLLVDQLGVAVQAAEGDEKIPEINDLVKVIKGSLGRTKERVRAEELRDAALGAIKENGSSQKQLDALVKELNELKND
+>BNYVV_P25
+MGDILGAVYDLGHRPYLARRTVYEDRLILSTHGNICRAINLLTHDNRTTLVYHNNTKRIRFRGLLCALHGPYCGFRALCRVMLCSLPRLCDIPINGSRDFVADPTRLDSSVNELLVSNGLVIHYDRVHHVPLHTDGFEVVDFTTVFRGPGNFLLPNATNFPRPTTTDQVYMVCLVNTVNCVLRFESELTVWVHSGLYTGDVLDVDNNVIQAPDGVDDDG
+
+>DNA_ChIP_Motif_For
+TTCGTGGCC**GGAAAGAGGCAAAAGAAGACTAGCTTAC**ACCTCATGGGGGTCAAGCAAGAGAAGAATGAAAGTCTAGCCGACTACATAAAAAGA
+>DNA_ChIP_Motif_Rev
+TCTTTTTATGTAGTCGGCTAGACTTTCATTCTTCTCTTGCTTGACCCCCATGAGGTGTAAGCTAGTCTTCTTTTGCCTCTTTCCGGCCACGAA
+>ion_ZN
 ```
-With the ligands [trichothecene-like](https://www.rcsb.org/ligand/7E0) (Tl) CCD_7E0 and  [UDP-2-fluoro-2-deoxy-D-glucose](https://www.rcsb.org/ligand/U2F) CCD_U2F. Using the following commands 
 
 ```{bash, eval=F}
 module load bioinfo-tools biopython/1.80-py3.10.8
-python3 -m json.tool  TpUGT89B1_Tl_UDP.json  > TpUGT89B1_Tl_UDP_cor.json
-protenix predict --input TpUGT89B1_Tl_UDP_cor.json  --out_dir TpUGT89B1_Tl_UDP_monomer/  --use_msa_server  --seeds 26263
+python3 -m json.tool BNYVV_P25_P19229_dimer_2Zn_dsDNA.json   > BNYVV_P25_P19229_dimer_2Zn_dsDNA_cor.json
+protenix predict --input BNYVV_P25_P19229_dimer_2Zn_dsDNA_cor.json  --out_dir BNYVV_P25_P19229/ --use_msa_server  --seeds 93187
 
-bash inference_parameter.sh TpUGT89B1/TpUGT89B1_Tl_UDP_cor-add-msa.json TpUGT89B1/ 26263 
-# In TpUGT89B1_DON_UDP_monomer/seed_26263/predictions flder 
+bash inference_parameter.sh BNYVV_P25_P19229/BNYVV_P25_P19229_dimer_2Zn_dsDNA-add-msa.json BNYVV_P25_P19229/Dimer_Zn/ 93187
+
 bash Code/ranking.sh
 bash Code/rmarkdown_format.sh models_ranking.txt
 ```
 
-models | disorder | iptm | ptm | plddt | ranking_score | gpde |
- --- | --- | --- | --- | --- | --- | --- |
-model_0 | 0.00 | 0.93 | 0.96 | 91.34 | 0.93 | 0.49 |
-model_1 | 0.00 | 0.93 | 0.96 | 91.34 | 0.93 | 0.49 |
-model_2 | 0.00 | 0.92 | 0.96 | 91.41 | 0.93 | 0.49 |
-model_3 | 0.00 | 0.92 | 0.96 | 91.34 | 0.93 | 0.49 |
-model_4 | 0.00 | 0.92 | 0.96 | 91.32 | 0.93 | 0.49 |
-
+| models| disorder  |	iptm  |	ptm  |	plddt  |	ranking_score  |	gpde |
+| --- | --- | --- | --- | --- | --- | --- |
+| model_0 |0.0 |	0.187	 |0.328 |	61.478 |	0.215 |	1.918 |
+| model_1	 |0.0	 |0.172	 |0.329 |	62.364 |	0.203 |	1.931|
+| model_2	 |0.0	 |0.166 |	0.329 |	61.060 |	0.198 |	1.99 |
+| model_3	 |0.0	 |0.162 |	0.328 |	60.658 |	0.196 |	1.979 |
+| model_4 |	0.0 |	0.157 |	0.327 |	61.877 | 0.191 |	1.992 |
 
 ::: {style="text-align: center;"}
 <figure>
 ```{=html}
-<img src="Figures/TpUGT89B1_Tl_UDP.gif" style="width: 100%;
+<img src="Figures/M0_P25_dsDNA_2Zn.png" style="width: 100%;
 height: 100%"/>
 ```
 <figcaption style="margin-top: 10px;">
 
-<strong>TpUGT89B1 docking Tl and UDP  prediction model 0</strong>
+<strong>Top model (m0) for P25 dimer binding to 2 Zn²⁺ ions and 93bp dsDNA</strong>
 
 </figcaption>
 </figure>
-<a name="TpUGT89B1_Tl_UDP.gif"></a>
+<a name="M0_P25_dsDNA_2Zn.png"></a>
 :::
+
 ## Contact probablities extraction 
 
-
 ```{bash, eval=F}
-perl Code/extract_pae_pde_contactprob_protenix.pl  TpUGT89B1_Tl_UDP_full_data_sample_0.json  contact_probs TpUGT89B1_Tl_UDP_contact_probs.csv   
+perl extract_pae_pde_contactprob_protenix.pl /home/aiaz0001/ProteinDisorder/ViralTFs_BNYVV_P25/Protenix_BNYVV_P25_P19229_dimer_2Zn_ssDNA/LocalRunPAE/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA/seed_93187/predictions/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_1.json contact_probs  Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_contactProb_m1.csv    
 
-for f  in {0..4}; do perl extract_pae_pde_contactprob_protenix.pl TpUGT89B1_Tl_UDP_full_data_sample_"$f".json token_pair_pae TpUGT89B1_Tl_UDP_pae_"$f".csv ; done 
+for f  in {0..4}; do perl extract_pae_pde_contactprob_protenix.pl Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_"$f".json token_pair_pae Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_"$f".csv ; done 
 
-for f  in {0..4}; do perl extract_pae_pde_contactprob_protenix.pl TpUGT89B1_Tl_UDP_full_data_sample_"$f".json token_pair_pde TpUGT89B1_Tl_UDP_pde_"$f".csv ; done 
+for f  in {0..4}; do perl extract_pae_pde_contactprob_protenix.pl Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_"$f".json token_pair_pde Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_"$f".csv ; done 
 
 module load PDCOLD/23.12  R/4.4.0
 
-Rscript Code/contact_prob.R TpUGT89B1_Tl_UDP_contact_probs.csv "TpUGT89B1_DON_UDP"  TpUGT89B1_Tl_UDP_contact_prob.png
-Rscript Code/pae_matrix.R TpUGT89B1_Tl_UDP_pae_0.csv "TpUGT89B1_DON_UDP" TpUGT89B1_Tl_UDP_pae_0.png
-Rscript Code/pae_matrix.R TpUGT89B1_Tl_UDP_pde_0.csv "TpUGT89B1_DON_UDP" TpUGT89B1_Tl_UDP_pde_0.png
+Rscript Code/contact_prob.R Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_contactProb_m1.csv "BNYVV_P25 dimer, 2Zn binding to dsDNA"  P25_P19229_dimer_2Zn_dsDNA_contactProb.png
+
+Rscript Code/pae_matrix.R Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_pae_m1.csv "BNYVV_P25 dimer, 2Zn binding to dsDNA" Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_pae_m1.png
+
+Rscript Code/pae_matrix.R Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_pde_m1.csv "TpUGT89B1_DON_UDP" Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_pde_m1.png
 ```
-
-### Contact probability
-::: {style="text-align: center;"}
-<figure>
-```{=html}
-<img src="Figures/TpUGT89B1_Tl_UDP_contact_prob.png" style="width: 100%;
-height: 100%"/>
-```
-<figcaption style="margin-top: 10px;">
-
-<strong>PAE matrix of top model TpUGT89B1 binding Tl and UDP</strong>
-
-</figcaption>
-</figure>
-<a name="TpUGT89B1_DON_UDP_contact_prob.png"></a>
-:::
 
 
 ### PAE top model 
 ::: {style="text-align: center;"}
 <figure>
 ```{=html}
-<img src="Figures/TpUGT89B1_Tl_UDP_pae_0.png" style="width: 100%;
+<img src="Figures/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_pae_m1.png" style="width: 100%;
 height: 100%"/>
 ```
 <figcaption style="margin-top: 10px;">
 
-<strong>CP matrix of TpUGT89B1 binding Tl and UDP</strong>
+<strong>Protenix PAE of P25 dimer binding to 2 Zn²⁺ ions and 93bp dsDNA, model </strong>
 
 </figcaption>
 </figure>
-<a name="TpUGT89B1_DON_UDP_pae_0.png"></a>
+<a name="Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_pae_m1.png"></a>
 :::
-
-### Chimera visualization 
-
-```{bash, eval=F}
-set bgColor white
-split #1
-show #1 surfaces
-color #1.1 #dedddaff
-transparency  #1.1 90 s
-color bfactor #1.1 ribbon  palette alphafold 
-color #1.2 #55ff00 transparency 0
-color #1.3 #555500 transparency 0
-lighting shadows true
-graphics silhouettes true
-lighting full
-# or alternative 
-preset "overall look" "publication 1 (silhouettes)"
-select /A:459,1 # Identify the C and N terminal 
-save "~/Documents/GitHub/TpUGT89B1_Docking/Figures/TpUGT89B1_Docking.png" supersample 4 width 4000 height 4000
-save "~/Documents/GitHub/TpUGT89B1_Docking/Figures/TpUGT89B1_Docking.cxs" 
-
-info residue #1.2 #  Confirm CCD chemical identity 
-info atoms #1.2 # Get atom identity for ligands 
-
-info residue #1.3
-info atoms #1.3
-```
-
-With the last two comands we can get the atom identity of each ligand modelled, which can be converted into R vector running in a bash terminal: 
-
-```{bash, eval=F}
-echo "atom id #1.2/B:1@C20 idatm_type C3
-atom id #1.2/B:1@C13 idatm_type C2
-atom id #1.2/B:1@C12 idatm_type C2
-atom id #1.2/B:1@C11 idatm_type C3
-atom id #1.2/B:1@C14 idatm_type C2
-atom id #1.2/B:1@C15 idatm_type C2
-atom id #1.2/B:1@O3 idatm_type O3
-atom id #1.2/B:1@C10 idatm_type C3
-atom id #1.2/B:1@C19 idatm_type C3
-atom id #1.2/B:1@C9 idatm_type C3
-atom id #1.2/B:1@C18 idatm_type C3
-atom id #1.2/B:1@C8 idatm_type C3
-atom id #1.2/B:1@C7 idatm_type C3
-atom id #1.2/B:1@C16 idatm_type C3
-atom id #1.2/B:1@C6 idatm_type C3
-atom id #1.2/B:1@C17 idatm_type C3
-atom id #1.2/B:1@O6 idatm_type O3" | awk '{gsub(/.*@/,"",$3);printf $3"\",\""}'
-```
-
-TpUGT89B1 has 459 aa, Tl has 17 tokens while UDP 36.
 
 # Interaction surface index analysis 
 
-### TpUGT89B1 PAE variation 
-<!-- 
-To identify the number of tokens related to Tl and UDP, evaluate the "token_asym_id" item of file "_full_data_sample_0.json", as shown:
-```{bash, eval=F}
-echo " "token_asym_id": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]" | grep -o 1 | wc
-```
---> 
-
 ```{r, eval=FALSE}
-TpUGT89B1_seq <-  "MSIPQTHLIAYPFPTSGHIIPLIDLTKNLITRNINVTVLLTPSNQHLLPPNYSPLLQTLVLPSPQFPNPNQNRLIATITFMHQHHYPIILQWARVHHLPPSAIISDFFLGWTHLLARDLDVPRLVFSPSGAFALSISFSLWRDLPQNDNPDDPNSVVSFPNLPNSPFYPWWQISHLFRDKKVEQDWEMMRTMFLFNLDAWGVVFNSFIDLEPAYFDHIKKELGHERVWAVGPVLPLDSGTEPEERGEASTVSCLELTTWLDKREDRSVVYVCFGSRTFLTTAEMDVLTSALELSGVHFILSVRVPDERRVEEDCGKISSGFIERVRERGFVIQGWASQLVILGHRAVGAFLTHCGWNSVLEGLVSGVVMLTWPMGADQYTNAKLLVDQLGVAVQAAEGDEKIPEINDLVKVIKGSLGRTKERVRAEELRDAALGAIKENGSSQKQLDALVKELNELKND" # 459
-Tl_seq <- c("C20","C13","C12","C11","C14","C15","O3","C10","C19","C9","C18","C8","C7","C16","C6","C17","O6")  #17 
-UDP_seq <- c("C1","O1","PB","O1B","O2B","O3A","PA","O1A","O2A","O5'","C5'","C4'","O4'","C1'","C2'","C3'","O3'","O2'","N1","C6'","O6'","N3","C7'","O7'","C8'","C9'","C2","F1","C3","O3","C4","O4","C5","C6","O6","O5") # 36 
-colsplit_TpUGT89B1<- strsplit(TpUGT89B1_seq, "")[[1]]
-colsplit_number_TpUGT89B1 <- paste0(seq(1,length(colsplit_TpUGT89B1)), colsplit_TpUGT89B1, sep="")
-UDP_number <- paste0(seq(1,length(UDP_seq)), UDP_seq, sep="")
+P25_dsDNA_0 <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_0_pae.csv.gz", header = FALSE))
+P25_dsDNA_1 <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_1_pae.csv.gz", header = FALSE))
+P25_dsDNA_2 <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_2_pae.csv.gz", header = FALSE))
+P25_dsDNA_3 <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_3_pae.csv.gz", header = FALSE))
+P25_dsDNA_4 <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_4_pae.csv.gz", header = FALSE))
 
-TpUGT89B1_models <- load_model_matrices("TpUGT89B1_Tl_UDP", "pae")
+model_list <- list(t(P25_dsDNA_0),t( P25_dsDNA_1), t(P25_dsDNA_2), t(P25_dsDNA_3), t(P25_dsDNA_4))
 
- TpUGT89B1_Tl<- process_pae_models_indexing(TpUGT89B1_models,  460:476, 1:459,"TpUGT89B1 binding to Tl","TpUGT89B1_Tl")
- TpUGT89B1_Tl$MinPAE_Index <-  TpUGT89B1_Tl$MinPAE_Index - 459
-TpUGT89B1_Tl$ResidueName <- colsplit_number_TpUGT89B1[TpUGT89B1_Tl$Residue]
-TpUGT89B1_Tl$InterName <- Tl_seq[TpUGT89B1_Tl$MinPAE_Index]
+P25_dimer_pae <- process_pae_models_indexing(model_list, 1:219, 220:438,"P25A binding to P25B","Medium")
+P25_dimer_pae$Residue <- P25_dimer_pae$Residue - 219 
 
- TpUGT89B1_UDP<- process_pae_models_indexing(TpUGT89B1_models, 477:512,  1:459, "TpUGT89B1 binding to UDP","TpUGT89B1_UDP")
-  TpUGT89B1_UDP$MinPAE_Index <-  TpUGT89B1_UDP$MinPAE_Index - 476
-TpUGT89B1_UDP$ResidueName <- colsplit_number_TpUGT89B1[TpUGT89B1_UDP$Residue]
-TpUGT89B1_UDP$InterName <- UDP_seq[TpUGT89B1_UDP$MinPAE_Index]
- 
- TpUGT89B1_DF <- rbind.data.frame(TpUGT89B1_Tl,TpUGT89B1_UDP)
+P25A_dimer_pae <- process_pae_models_indexing(model_list, 533:624,220:438,"P25A binding to 93bp dsDNA","Weak")
+P25A_dimer_pae$Residue <- P25A_dimer_pae$Residue - 219
+P25A_dimer_pae$MinPAE_Index <- P25A_dimer_pae$MinPAE_Index - 532
 
-TpUGT89B1_DF$Model <- factor(TpUGT89B1_DF$Model, levels = c("0","1","2","3","4")) 
+P25B_dimer_pae <- process_pae_models_indexing(model_list, 533:624,1:219,"P25B binding to 93bp dsDNA","Weak")
+P25B_dimer_pae$MinPAE_Index <- P25B_dimer_pae$MinPAE_Index - 532
 
-TpUGT89B1_DF_plot <-  ggplot(TpUGT89B1_DF, aes(x = Residue, y = MinPAE ,  colour =Model)) +
-  scale_colour_viridis_d()  +   geom_line(size = 0.8, linetype = "solid") +
-    labs(title = "PAE TpUGT89B1 docking Tl and UDP",
-         x = "UGT89B1 Residue", y = "Expected Position Error (Å)",
-         color = "Model") +  theme_bw(base_size = 20)  +
-  scale_x_continuous(breaks = seq(1, 459, by = 10)) + 
+P25_Zn_CP_pae <- process_pae_models_indexing(model_list, 624:626,1:219,"P25A binding to 2Zn","Strong")
+P25_Zn_CP_pae$MinPAE_Index <- P25_Zn_CP_pae$MinPAE_Index - 624
+
+P25Ad_dsDNA_DF_ALL <-  rbind.data.frame(P25_dimer_pae,P25A_dimer_pae,P25B_dimer_pae,P25_Zn_CP_pae)
+
+P25Ad_dsDNA_DF_summary <- P25Ad_dsDNA_DF_ALL %>%
+    group_by(Interaction,Residue,Type) %>%
+    summarize(
+        mean_value = mean(MinPAE),
+        sd_value = sd(MinPAE),  # Standard deviation
+        n = n(),
+        se_value = sd(MinPAE) / sqrt(n())  # Standard error
+    )
+
+P25Ad_dsDNA_DF_summary$Interaction<- factor(P25Ad_dsDNA_DF_summary$Interaction, levels = c("P25A binding to P25B",
+                                                                               "P25A binding to 93bp dsDNA",
+                                                                               "P25B binding to 93bp dsDNA", 
+                                                                               "P25A binding to 2Zn"))
+
+P25d_dsDNA_all_plot <-  ggplot(P25Ad_dsDNA_DF_summary, aes(x = Residue, y = mean_value ,  colour =Interaction)) +
+           scale_colour_viridis_d(-1)  +   geom_line(size = 0.8, linetype = "solid") +
+geom_ribbon(aes(ymin = mean_value - se_value, ymax = mean_value + se_value), alpha = 0.2, colour = NA ) +
+    labs(title = "PAE P25 dimer binding to dsDNA",
+         x = "P25 Residue", y = "Expected Position Error (Å)",
+         color = "Interaction") +  theme_classic(base_size = 16)  +
+  scale_x_continuous(breaks = seq(1, length(P25Ad_dsDNA_DF_summary$Residue), by = 5)) + 
      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),plot.title = element_text(hjust = 0.5),legend.position = "bottom") +
-  facet_grid(Type~., scales = "free")
+  facet_grid(Interaction~., scales = "free")  
 
-  ggsave(filename = "Figures/TpUGT89B1_PAE_plot.pdf", plot = TpUGT89B1_DF_plot,device = "pdf", width=14, height=12)
-    ggsave(filename = "Figures/TpUGT89B1_PAE_plot.png", plot = TpUGT89B1_DF_plot,device = "png", width=14, height=12)
+  ggsave(filename = "../Figures/ViralTFs_BNYVV_P25_pae_plot.svg", plot = P25d_dsDNA_all_plot,device = "svg", width=12, height=12)
+
 ```
-
 ::: {style="text-align: center;"}
 <figure>
 ```{=html}
-<img src="Figures/TpUGT89B1_PAE_plot.png" style="width: 100%;
+<img src="Figures/ViralTFs_BNYVV_P25_pae_plot.svg" style="width: 100%;
 height: 100%"/>
 ```
 <figcaption style="margin-top: 10px;">
 
-<strong>TpUGT89B1 docking Tl and UDP PAE </strong>
+<strong>Linear PAE of P25 dimer binding to 2 Zn²⁺ ions and 93bp dsDNA, model 1</strong>
 
 </figcaption>
 </figure>
-<a name="TpUGT89B1_DF_plot.png"></a>
+<a name="ViralTFs_BNYVV_P25_pae_plot.svg"></a>
 :::
 
-# Contact Probability 
 
-## TpUGT89B1 CP to Tl and UDP
+### Contact probability in interaction surface
+
+::: {style="text-align: center;"}
+<figure>
+```{=html}
+<img src="Figures/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_cprob_m0.png" style="width: 100%;
+height: 100%"/>
+```
+<figcaption style="margin-top: 10px;">
+
+<strong>Protenix Contact  probabilitie of P25 dimer binding to 2 Zn²⁺ ions and 93bp dsDNA, model 1</strong>
+
+</figcaption>
+</figure>
+<a name="Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_cprob_m0.png"></a>
+:::
+
 
 ```{r, eval=FALSE}
-  TpUGT89B1_Cp <- as.matrix(read.csv("CP_PAE_PDE/TpUGT89B1_Tl_UDP_contact_probs.csv.gz", header = FALSE))
-TpUGT89B1_Cp_Tr <- list(t(TpUGT89B1_Cp))
-
-TpUGT89B1_Cp_Tl <- process_contactP_models_indexing(TpUGT89B1_Cp_Tr,  460:476, 1:459, "TpUGT89B1 binding to Tl","TpUGT89B1_Tl")
- TpUGT89B1_Cp_Tl$MinPAE_Index <-  TpUGT89B1_Cp_Tl$MinPAE_Index - 459
-TpUGT89B1_Cp_Tl$ResidueName <- colsplit_number_TpUGT89B1[TpUGT89B1_Cp_Tl$Residue]
-TpUGT89B1_Cp_Tl$InterName <- Tl_seq[TpUGT89B1_Cp_Tl$MinPAE_Index]
-
-TpUGT89B1_Cp_UDP <- process_contactP_models_indexing(TpUGT89B1_Cp_Tr, 477:512,  1:459, "TpUGT89B1 binding to UDP","TpUGT89B1_UDP")
- TpUGT89B1_Cp_UDP$MinPAE_Index <-  TpUGT89B1_Cp_UDP$MinPAE_Index - 476
-TpUGT89B1_Cp_UDP$ResidueName <- colsplit_number_TpUGT89B1[TpUGT89B1_Cp_UDP$Residue]
-TpUGT89B1_Cp_UDP$InterName <- UDP_seq[TpUGT89B1_Cp_UDP$MinPAE_Index]
-
- TpUGT89B1_CP_DF <- rbind.data.frame(TpUGT89B1_Cp_Tl,TpUGT89B1_Cp_UDP)
-
-highlight_residues <- TpUGT89B1_CP_DF[TpUGT89B1_CP_DF$MinPAE >= 0.9,2]
-
-#TpUGT89B1_CP_DF$ResidueName <- gsub( "[0-9]+", "", TpUGT89B1_CP_DF$ResidueName)
+ colnames_seq <- paste0( "MGDILGAVYDLGHRPYLARRTVYEDRLILSTHGNICRAINLLTHDNRTTLVYHNNTKRIRFRGLLCALHGPYCGFRALCRVMLCSLPRLCDIPINGSRDFVADPTRLDSSVNELLVSNGLVIHYDRVHHVPLHTDGFEVVDFTTVFRGPGNFLLPNATNFPRPTTTDQVYMVCLVNTVNCVLRFESELTVWVHSGLYTGDVLDVDNNVIQAPDGVDDDG","MGDILGAVYDLGHRPYLARRTVYEDRLILSTHGNICRAINLLTHDNRTTLVYHNNTKRIRFRGLLCALHGPYCGFRALCRVMLCSLPRLCDIPINGSRDFVADPTRLDSSVNELLVSNGLVIHYDRVHHVPLHTDGFEVVDFTTVFRGPGNFLLPNATNFPRPTTTDQVYMVCLVNTVNCVLRFESELTVWVHSGLYTGDVLDVDNNVIQAPDGVDDDG", "TTCGTGGCCGGAAAGAGGCAAAAGAAGACTAGCTTACACCTCATGGGGGTCAAGCAAGAGAAGAATGAAAGTCTAGCCGACTACATAAAAAGA", 
+"TCTTTTTATGTAGTCGGCTAGACTTTCATTCTTCTCTTGCTTGACCCCCATGAGGTGTAAGCTAGTCTTCTTTTGCCTCTTTCCGGCCACGAA", 
+"Z","Z", collapse = "") 
+nt_seq <- paste0( "TTCGTGGCCGGAAAGAGGCAAAAGAAGACTAGCTTACACCTCATGGGGGTCAAGCAAGAGAAGAATGAAAGTCTAGCCGACTACATAAAAAGA", 
+"TCTTTTTATGTAGTCGGCTAGACTTTCATTCTTCTCTTGCTTGACCCCCATGAGGTGTAAGCTAGTCTTCTTTTGCCTCTTTCCGGCCACGAA", 
+"Z","Z", collapse = "") 
+colsplit <- strsplit(colnames_seq, "")[[1]]
+colsplit_nt_seq <- strsplit(nt_seq, "")[[1]]
 
 
-TpUGT89B1_CP_DF$Type <- gsub("TpUGT89B1_Tl", "Trichothecene" ,TpUGT89B1_CP_DF$Type)
-TpUGT89B1_CP_DF$Type <- gsub("TpUGT89B1_UDP", "UDP" ,TpUGT89B1_CP_DF$Type) 
-ligands <- c("Trichothecene" = "#448F20", "UDP" = "#3A3A1A" )
-TpUGT89B1_CP_plot <-  ggplot(TpUGT89B1_CP_DF[TpUGT89B1_CP_DF$MinPAE > 0,], aes(x = Residue, y = MinPAE , fill  =Type)) +
-  scale_fill_manual(values = ligands) +
+colsplit_number <- paste0(seq(1,626), colsplit, sep="")
+colsplit_nt_seq_number <- paste0(seq(1,188), colsplit_nt_seq, sep="")
+
+P25_dimer_2Zn_dsDNA_1  <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_contactProb_m1.csv", header = FALSE))
+model_list <- list(t(P25_dimer_2Zn_dsDNA_1))
+
+#BNYVV_P25A_dsDNA_CP <- process_contactP_models_indexing(model_list, 439:532,1:219,"P25A binding to 93bp dsDNA","Unique")
+BNYVV_P25A_dsDNA_CP <- process_contactP_models_indexing(model_list, 439:624,1:219,"P25A binding to 93bp dsDNA","Unique")
+BNYVV_P25A_dsDNA_CP$ResidueName <- colsplit_number[BNYVV_P25A_dsDNA_CP$Residue]
+BNYVV_P25A_dsDNA_CP$MinPAE_Index <- BNYVV_P25A_dsDNA_CP$MinPAE_Index - 438
+BNYVV_P25A_dsDNA_CP$InterName <- colsplit_nt_seq_number[BNYVV_P25A_dsDNA_CP$MinPAE_Index]
+
+
+BNYVV_P25B_dsDNA_CP <- process_contactP_models_indexing(model_list, 439:624,220:438,"P25B binding to 93bp dsDNA","Unique")
+BNYVV_P25B_dsDNA_CP$Residue <- BNYVV_P25B_dsDNA_CP$Residue - 219
+BNYVV_P25B_dsDNA_CP$ResidueName <- colsplit_number[BNYVV_P25B_dsDNA_CP$Residue]
+BNYVV_P25B_dsDNA_CP$MinPAE_Index <- BNYVV_P25B_dsDNA_CP$MinPAE_Index - 438
+BNYVV_P25B_dsDNA_CP$InterName <- colsplit_nt_seq_number[BNYVV_P25B_dsDNA_CP$MinPAE_Index]
+
+
+
+BNYVV_P25_dimer_CP <- process_contactP_models_indexing(model_list, 1:219, 220:439,"P25A binding to P25B","Unique")
+
+BNYVV_P25_dimer_CP$ResidueName <- colsplit_number[BNYVV_P25_dimer_CP$Residue]
+BNYVV_P25_dimer_CP$InterName <- colsplit_number[BNYVV_P25_dimer_CP$MinPAE_Index]
+BNYVV_P25_dimer_CP$Residue  <- BNYVV_P25_dimer_CP$Residue - 219
+
+
+BNYVV_P25_Zn_CP <- process_contactP_models_indexing(model_list, 625:626,1:219,"P25A binding to 2Zn","Unique")
+BNYVV_P25_Zn_CP$InterName <- colsplit_number[BNYVV_P25_Zn_CP$MinPAE_Index]
+BNYVV_P25_Zn_CP$ResidueName <- colsplit_number[BNYVV_P25_Zn_CP$Residue]
+
+
+BNYVV_P25d_dsDNA  <-  rbind.data.frame(BNYVV_P25A_dsDNA_CP,BNYVV_P25B_dsDNA_CP, BNYVV_P25_dimer_CP,BNYVV_P25_Zn_CP)
+
+highlight_residues <- BNYVV_P25d_dsDNA[BNYVV_P25d_dsDNA$MinPAE >= 0.07,2] 
+
+BNYVV_P25d_dsDNA$Interaction<- factor(BNYVV_P25d_dsDNA$Interaction, levels = c("P25A binding to P25B",
+                                                                               "P25A binding to 93bp dsDNA",
+                                                                               "P25B binding to 93bp dsDNA", 
+                                                                               "P25A binding to 2Zn"))
+BNYVV_P25d_dsDNA_plot <- ggplot(BNYVV_P25d_dsDNA[BNYVV_P25d_dsDNA$MinPAE > 0,], aes(x = Residue, y = MinPAE ,  fill =Interaction)) +
+     #scale_color_manual(values = colors) + 
+      scale_fill_viridis_d(-1)  +  
+  #geom_line(size = 0.8, linetype = "solid") +
  geom_col() + 
-  geom_point( data = TpUGT89B1_CP_DF[TpUGT89B1_CP_DF$MinPAE >=0.5 & TpUGT89B1_CP_DF$Type == "Trichothecene",], size = 10, pch = 21, bg = "black", col = 1 ) +
-  geom_text( aes(label =ifelse( MinPAE >= 0.5 & Type == "Trichothecene" , ResidueName , NA)), color = "white", size = 3) +
-    labs(       x = "UGT89B1 Residue", y = "Contact probabilities") +  theme_bw(base_size = 30)  +
-  scale_x_continuous(breaks = seq(1, 459, by = 15)) + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 1, hjust=1),legend.position = "none") + 
-  facet_grid(Type~.) 
-  
-  ggsave(filename = "Figures/TpUGT89B1_Cp.pdf", plot = TpUGT89B1_CP_plot,device = "pdf", width=14, height=12)
-  ggsave(filename = "Figures/TpUGT89B1_Cp.png", plot = TpUGT89B1_CP_plot,device = "png", width=14, height=12)
-  #TpUGT89B1_CP_DF[TpUGT89B1_CP_DF$Contact_Probability >= 0.5 & TpUGT89B1_CP_DF$Type == "Trichothecene",]
-colnames(TpUGT89B1_CP_DF) <-  c("Interaction",  "Residue","Contact_Probability",  "InteractResidue", "Type",        "Model"    ,    "ResidueName", "InterName") 
+    geom_text_repel(aes(label =ifelse(MinPAE < 0.4 & MinPAE > 0.05 , InterName , NA)), # index < 25 for P6B
+                  segment.size = 0.3)  + 
+    labs(title = "Contact probabilities P25 dimer binding to dsDNA and  2Zn²⁺\nfor top model",
+         x = "P25 Residue", y = "Contact probabilities",
+         color = "Interaction") +  theme_classic(base_size = 16)  +
+  #scale_x_continuous(breaks = seq(1, length(P6dimmer$Residue), by = 5)) + 
+     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),plot.title = element_text(hjust = 0.5),legend.position = "bottom") + 
+     facet_grid(Interaction~., scales = "free_y")  +
+  #scale_y_continuous(breaks = seq(0, 1, by = 0.02))  +
+  # keep defaults and add highlight_residues as extra breaks
+  scale_x_continuous(breaks = function(x) {
+    unique(c(pretty(x), highlight_residues))
+  })          
 
- write.csv(TpUGT89B1_CP_DF[TpUGT89B1_CP_DF$Contact_Probability >= 0.1,] , file =  "Results/TpUGT89B1_CP.txt",  row.names =F ) 
-
+ ggsave(filename = "../Figures/ViralTFs_BNYVV_P25_CP_plot.svg", plot = BNYVV_P25d_dsDNA_plot,device = "svg", width=18, height=12)
 ```
 
 ::: {style="text-align: center;"}
 <figure>
 ```{=html}
-<img src="Figures/TpUGT89B1_Cp.png" style="width: 100%;
+<img src="Figures/ViralTFs_BNYVV_P25_CP_plot.svg" style="width: 100%;
 height: 100%"/>
 ```
 <figcaption style="margin-top: 10px;">
 
-<strong>UGT89B1-Tl-UDP contact probability</strong>
+<strong>Linear Contact probabilities of P25 dimer binding to 2 Zn²⁺ ions and 93bp dsDNA, model 1</strong>
 
 </figcaption>
 </figure>
-<a name="TpUGT89B1_Cp.png"></a>
+<a name="ViralTFs_BNYVV_P25_CP_plot.svg"></a>
 :::
 
+#### Contact probabilities dsDNA to P25
+
+```{r, eval=FALSE}
+
+  colnames_seq <- paste0( "MGDILGAVYDLGHRPYLARRTVYEDRLILSTHGNICRAINLLTHDNRTTLVYHNNTKRIRFRGLLCALHGPYCGFRALCRVMLCSLPRLCDIPINGSRDFVADPTRLDSSVNELLVSNGLVIHYDRVHHVPLHTDGFEVVDFTTVFRGPGNFLLPNATNFPRPTTTDQVYMVCLVNTVNCVLRFESELTVWVHSGLYTGDVLDVDNNVIQAPDGVDDDG","MGDILGAVYDLGHRPYLARRTVYEDRLILSTHGNICRAINLLTHDNRTTLVYHNNTKRIRFRGLLCALHGPYCGFRALCRVMLCSLPRLCDIPINGSRDFVADPTRLDSSVNELLVSNGLVIHYDRVHHVPLHTDGFEVVDFTTVFRGPGNFLLPNATNFPRPTTTDQVYMVCLVNTVNCVLRFESELTVWVHSGLYTGDVLDVDNNVIQAPDGVDDDG", "TTCGTGGCCGGAAAGAGGCAAAAGAAGACTAGCTTACACCTCATGGGGGTCAAGCAAGAGAAGAATGAAAGTCTAGCCGACTACATAAAAAGA", 
+"TCTTTTTATGTAGTCGGCTAGACTTTCATTCTTCTCTTGCTTGACCCCCATGAGGTGTAAGCTAGTCTTCTTTTGCCTCTTTCCGGCCACGAA", 
+"Z","Z", collapse = "") 
+colsplit <- strsplit(colnames_seq, "")[[1]]
+colsplit_number <- paste0(seq(1,626), colsplit, sep="")
+
+P25_dimer_2Zn_dsDNA_1 <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_contactProb_m1.csv", header = FALSE))
+
+model_list <- list(t(P25_dimer_2Zn_dsDNA_1))
+
+
+#BNYVV_P25A_dsDNA_CP <- process_contactP_models_indexing(model_list, 439:532,1:219,"P25A binding to 93bp dsDNA","Unique")
+BNYVV_P25A_dsDNA_CP_neg <- process_contactP_models_indexing(model_list, 1:219,532:624,"93nt - dsDNA binding to P25A","Negative strand")
+BNYVV_P25A_dsDNA_CP_neg$ResidueName <- colsplit_number[BNYVV_P25A_dsDNA_CP_neg$Residue]
+BNYVV_P25A_dsDNA_CP_neg$InterName <- colsplit_number[BNYVV_P25A_dsDNA_CP_neg$MinPAE_Index]
+BNYVV_P25A_dsDNA_CP_neg$Residue <- BNYVV_P25A_dsDNA_CP_neg$Residue - 531
+ 
+BNYVV_P25A_dsDNA_CP_pos <- process_contactP_models_indexing(model_list, 1:219,439:531,"93nt + dsDNA binding to P25A","Positive strand")
+BNYVV_P25A_dsDNA_CP_pos$ResidueName <- colsplit_number[BNYVV_P25A_dsDNA_CP_pos$Residue]
+BNYVV_P25A_dsDNA_CP_pos$InterName <- colsplit_number[BNYVV_P25A_dsDNA_CP_pos$MinPAE_Index]
+BNYVV_P25A_dsDNA_CP_pos$Residue <- BNYVV_P25A_dsDNA_CP_pos$Residue - 438
+
+BNYVV_P25B_dsDNA_CP_neg  <- process_contactP_models_indexing(model_list, 220:438,532:624,"93nt - dsDNA binding to P25B","Negative strand")
+BNYVV_P25B_dsDNA_CP_neg$ResidueName <- colsplit_number[BNYVV_P25B_dsDNA_CP_neg$Residue]
+BNYVV_P25B_dsDNA_CP_neg$Residue <- BNYVV_P25B_dsDNA_CP_neg$Residue - 531
+BNYVV_P25B_dsDNA_CP_neg$MinPAE_Index <- BNYVV_P25B_dsDNA_CP_neg$MinPAE_Index - 219
+BNYVV_P25B_dsDNA_CP_neg$InterName <- colsplit_number[BNYVV_P25B_dsDNA_CP_neg$MinPAE_Index]
+
+BNYVV_P25B_dsDNA_CP_pos <- process_contactP_models_indexing(model_list, 220:438,439:531,"93nt + dsDNA binding to P25B","Positive strand")
+BNYVV_P25B_dsDNA_CP_pos$ResidueName <- colsplit_number[BNYVV_P25B_dsDNA_CP_pos$Residue]
+BNYVV_P25B_dsDNA_CP_pos$Residue <- BNYVV_P25B_dsDNA_CP_pos$Residue - 438
+BNYVV_P25B_dsDNA_CP_pos$MinPAE_Index <- BNYVV_P25B_dsDNA_CP_pos$MinPAE_Index - 219
+BNYVV_P25B_dsDNA_CP_pos$InterName <- colsplit_number[BNYVV_P25B_dsDNA_CP_pos$MinPAE_Index]
+
+BNYVV_P25d_dsDNA  <-  rbind.data.frame(BNYVV_P25A_dsDNA_CP_pos,BNYVV_P25A_dsDNA_CP_neg, BNYVV_P25B_dsDNA_CP_pos, BNYVV_P25B_dsDNA_CP_neg)
+
+highlight_residues <- BNYVV_P25d_dsDNA[BNYVV_P25d_dsDNA$MinPAE >= 0.05,2] 
+
+BNYVV_P25d_dsDNA$Interaction<- factor(BNYVV_P25d_dsDNA$Interaction, levels = c("93nt + dsDNA binding to P25A",
+                                                                               "93nt - dsDNA binding to P25A",
+                                                                               "93nt + dsDNA binding to P25B",
+                                                                               "93nt - dsDNA binding to P25B"))
+
+BNYVV_P25d_dsDNA_plot <- ggplot(BNYVV_P25d_dsDNA[BNYVV_P25d_dsDNA$MinPAE>0,], aes(x = Residue, y = MinPAE ,  fill =Interaction)) +
+     #scale_color_manual(values = colors) + 
+      scale_fill_viridis_d(-1)  +  
+  geom_col() +
+ geom_point() + 
+    geom_text_repel(aes(label =ifelse( MinPAE > 0.01 , InterName , NA)), # index < 25 for P6B
+                  segment.size = 0.3)  + 
+    labs(title = "Contact probabilities dsDNA binding to P25 dimer",
+         x = "dsDNA nucleotide", y = "Contact probabilities",
+         color = "Interaction") +  theme_classic(base_size = 16)  +
+     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),plot.title = element_text(hjust = 0.5),legend.position = "bottom") +
+  # keep defaults and add highlight_residues as extra breaks
+  scale_x_continuous(breaks = function(x) {
+    unique(c(pretty(x), highlight_residues))
+  })          +  scale_y_continuous(breaks = seq(0, 1, by = 0.01))  +
+  facet_grid(Interaction~., scales = "free_y")  
+ ggsave(filename = "../Figures/ViralTFs_dsDNA_to_BNYVV_P25_CP_plot.svg", plot = BNYVV_P25d_dsDNA_plot,device = "svg", width=18, height=12)
+ 
+ write.csv(BNYVV_P25d_dsDNA[BNYVV_P25d_dsDNA$MinPAE >= 0.03,] , file =  "Results/ViralTFs_dsDNA_to_BNYVV_P25_CP.txt",  row.names =F ) 
+ 
+```
+
+::: {style="text-align: center;"}
+<figure>
+```{=html}
+<img src="Figures/ViralTFs_dsDNA_to_BNYVV_P25_CP_plot.svg" style="width: 100%;
+height: 100%"/>
+```
+<figcaption style="margin-top: 10px;">
+
+<strong>Linear Contact probabilities of dsRNA binding P25 dimer, model 1</strong>
+
+</figcaption>
+</figure>
+<a name="ViralTFs_dsDNA_to_BNYVV_P25_CP_plot.svg"></a>
+:::
+
+## Displaying physical distances  
+
+PAE do not encode the actual physical distance between the set of modeled molecules, in order to do so a [phyton script implementation](Codes/intermodel_chain_distances_from_cif.py) was developed which calculate the minimum distance per residue using representative atoms, for Protein CA and for Nucleic acids, P. 
+
+```{bash, eval=FALSE}
+ python3 intermodel_chain_distances_from_cif.py --in Protenix_BNYVV_P25_Local_dimer_2Zn_dsDNA_seed_93187_sample_0.cif --out P25_Local_dimer_2Zn_dsDNA_distancefromcif.txt
+ 
+#Usage examples:
+# Residue-level minimal distances between chains across two files
+# python intermodel_chain_distances_from_cif.py --in a.cif b.cif --mode res --out res_min.csv
+
+# Atom-level contacts within 5 Å across all chains and files, only inter-file
+# python intermodel_chain_distances_from_cif.py --in a.cif b.cif --mode atom --cutoff 5.0 --distinct-models true --out atom_contacts_5A.csv
+
+# Allow chains inside the same file/object as long as chain IDs differ 
+# python intermodel_chain_distances_from_cif.py --in complex.cif --mode res --distinct-models false --out within_object_res_min.csv
+```
+
+```{r, eval=FALSE}
+P25_dimer_2Zn_dsDNA_cif_distance <- read.csv("Data/P25_Local_dimer_2Zn_dsDNA_distancefromcif.txt", header = T)
+
+#P25_dimer_2Zn_dsDNA_distances <- P25_dimer_2Zn_dsDNA_cif_distance[P25_dimer_2Zn_dsDNA_cif_distance$distance_A < 10, ]
+P25_dimer_2Zn_dsDNA_cif_distance$model1 <- gsub(".*\\|","",P25_dimer_2Zn_dsDNA_cif_distance$model1)
+P25_dimer_2Zn_dsDNA_cif_distance$model2 <- gsub(".*\\|","",P25_dimer_2Zn_dsDNA_cif_distance$model2)
+
+P25_dimer_2Zn_dsDNA_cif_distance[P25_dimer_2Zn_dsDNA_cif_distance$resi1 == 161,]
+
+write.csv(P25_dimer_2Zn_dsDNA_cif_distance , file =  "Results/P25_dimer_2Zn_dsDNA_distances.txt",  row.names =F ) 
+
+
+Zn_Role <- P25_dimer_2Zn_dsDNA_cif_distance[( P25_dimer_2Zn_dsDNA_cif_distance$chain2 == "E" | P25_dimer_2Zn_dsDNA_cif_distance$chain2 == "F") , ]
+```
+To verify distance calculation, the model was loaded on ChimeraX, using the following commands: 
+
+```{bash, eval=FALSE}
+# https://www.rbvi.ucsf.edu/chimerax/docs/user/tutorials/binding-sites.html
+
+split #1
+distance #1.2/b:161@CA #1.3/c:35@P 
+distance #1.2/b:161@N #1.3/c:35@P 
+
+# To show all distances 
+contacts #1.1/a:161 #1.3/c:56 reveal t showdist t;  label height 1; 
+
+# To filter only inter Model distances 
+contacts #1.1/a:161 #1.3/c:56 reveal t showdist t intraMol false;  label height 1; 
+```
+
+
+::: {style="text-align: center;"}
+<figure>
+```{=html}
+<img src="Figures/ViralTFs_BNYVV_P25_aa76.png" style="width: 100%;
+height: 100%"/>
+```
+<figcaption style="margin-top: 10px;">
+
+<strong>Distance between two atoms of 161P and 35C, visualize on ChimeraX</strong>
+
+</figcaption>
+</figure>
+<a name="ViralTFs_BNYVV_P25_aa76.png"></a>
+:::
+
+### Buried or Surface Aminoacids 
+
+A given aminoacid might be environment—buried in a hydrophobic pocket, near a positive Lys, or hydrogen-bonded to something—how will that shift its normal pKa (acid dissociation constant). To measure this physical property, [PROPka](https://www.ddl.unimi.it/vegaol/propka.htm) online tool predict the pKa of ionizable groups (like Asp, Glu, His, Lys, Tyr, Cys…) using empirical rules based on the 3D environment of each residue.
+
+low pKa → loses its proton easily → tends to be negatively charged
+high pKa → holds on to its proton → tends to be positively charged
+
+The output result was then processed using the ptyhon deparse script, [propKa_parser.py](Codes/propKa_parser.py): 
+
+```{bash, eval=FALSE}
+#Extract monomer from chimera
+python propKa_parser.py  vegawe.out  ViralTF/Results/PROPka_P25monomer.out
+
+
+ tail -n +3 Results/PROPka_P25monomer.out | awk '$3 ~ "BURIED|SUFACE"' > Results/PROPka_P25monomer_final.out
+
+# still requires one manual step of remove last line that it's bind to last aminoacid
+
+# paste(strsplit("13|14|20|58|60|62|88|147|162|183", "\\|")[[1]],collapse = "$|^")  
+# Verification
+  awk '{residue=$1; gsub(".*_|^[CN][+-]_","",residue); if(residue ~  /^13$|^14$|^20$|^58$|^60$|^62$|^88$|^147$|^162$|^183/) print residue"\t"$0}'  ../Documents/GitHub/Complex_Geometry/ViralTF/Results/PROPka_P25monomer_final.out
+
+ 
+```
+
+## Analysis integration 
+
+```{r, eval=FALSE}
+#P25A_CP <- BNYVV_P25d_dsDNA[BNYVV_P25d_dsDNA$Interaction == "93nt - dsDNA binding to P25A" | BNYVV_P25d_dsDNA$Interaction == "93nt + dsDNA binding to P25A", ] 
+
+#P25A_CP$PN25A_AA <- P25A_CP$MinPAE_Index            
+
+P25A_CP <- BNYVV_P25d_dsDNA[BNYVV_P25d_dsDNA$Interaction == "P25A binding to 93bp dsDNA", ] 
+P25A_CP$PN25A_AA <- P25A_CP$Residue            
+
+P25A_distances <- P25_dimer_2Zn_dsDNA_cif_distance[P25_dimer_2Zn_dsDNA_cif_distance$chain1 == "A" & P25_dimer_2Zn_dsDNA_cif_distance$chain2 != "B"  , ]
+
+P25A_distances$PN25A_AA <- P25A_distances$resi1 
+P25A_CP_distances <- merge(P25A_CP,P25A_distances , by.x = "PN25A_AA")
+
+P25_monomer_Pka <- read.csv("Results/PROPka_P25monomer_final.out", sep = "\t", header = F)
+colnames(P25_monomer_Pka) <-  c("Residue", "pKa", "Locate", "Desolv_Massive","m", "Desolv_Local", "Hydrogen_Bounds", "HB_SC_Value", "HB_SC_Partner", 
+                                "HB_BB_Value", "HB_BB_Partner", "Coulombic_Value", "Coulombic_Partner")
+
+P25_monomer_Pka$PN25A_AA <- gsub(".*_|^[CN][+-]_","",P25_monomer_Pka$Residue)
+
+P25A_CP_dist_pka <- merge(P25A_CP_distances,P25_monomer_Pka , by = "PN25A_AA")
+
+#P25A_CP_dist_pka[grepl("^13$|^14$|^20$|^58$|^60$|^62$|^88$|^147$|^162$|^183",P25A_CP_dist_pka$PN25A_AA),"PN25A_AA"]
+
+AA_Candidates <- P25A_CP_dist_pka[grepl("^13$|^14$|^19$|^20$|^26$|^37$|^47$|^57$|^58$|^60$|^62$|^76$|^80$|^88$|^98$|^106$|^126$|^147$|^162$|^183",P25A_CP_dist_pka$PN25A_AA),]
+
+#AA_Candidates_Surface <- AA_Candidates[AA_Candidates$Locate != "BURIED",]
+#19, 57 and 80 
+
+#table(AA_Candidates_Surface[AA_Candidates_Surface$MinPAE_Index > 0 , "PN25A_AA"])
+# not pass 26  37  47   76  98 106 126 
+
+#table(AA_Candidates_Surface[AA_Candidates_Surface$MinPAE_Index > 0 & AA_Candidates_Surface$distance_A < 10, "PN25A_AA"])
+
+# 13  14  20  58  60  62  88 147 162 183
+#table(AA_Candidates_Surface[AA_Candidates_Surface$MinPAE_Index > 0 & AA_Candidates_Surface$distance_A < 10, "Residue.y"])
+# HIS_13 ARG_14 ARG_20 ARG_58  ARG_60  ARG_62  ARG_88 ARG_147 ARG_162 ARG_183      
+AA_Candidates_Surface <- AA_Candidates[AA_Candidates$Locate != "BURIED" & AA_Candidates$MinPAE_Index > 0 & AA_Candidates$distance_A < 10,]
+ write.csv(AA_Candidates_Surface, file =  "Results/AA_Candidates.txt",  row.names =F ) 
+
+#############
+No_Candidates <- P25A_CP_dist_pka[!grepl("^13$|^14$|^19$|^20$|^26$|^37$|^47$|^57$|^58$|^60$|^62$|^76$|^80$|^88$|^98$|^106$|^126$|^147$|^162$|^183",P25A_CP_dist_pka$PN25A_AA),]
+
+#table(No_Candidates$PN25A_AA)
+# 3   9  10  16  23  24  25  32  36  44  45  52  53  66  69  72  73  79  84  90  91  99 103 108 113 123 124 125 128 129 133 135 138 141 167 170 173 180 185 187 193 197 200 203 205 213 216 217 218 219
+
+#table(No_Candidates[No_Candidates$Locate == "BURIED","PN25A_AA"])
+#23  36  53  79  84 123 125 128 167 170 173 180 193 
+#table(No_Candidates[No_Candidates$MinPAE_Index > 0 & No_Candidates$distance_A < 10 & No_Candidates$Locate != "BURIED", "Residue.y"])
+#  3   9  10  16  52  69  72  73 133 141 185 187 197 218 219 
+#  ASP_10 ASP_141 ASP_218   ASP_3  GluC-_219  CYS_73 GLU_185 GLU_187 HIS_133  HIS_69  TYR_16 TYR_197  TYR_52  TYR_72   TYR_9
+
+Additional_Candidates<- No_Candidates[No_Candidates$MinPAE_Index > 0 & No_Candidates$distance_A < 8 & No_Candidates$Locate != "BURIED", ]
+ write.csv(Additional_Candidates, file =  "Results/AA_Zn_highlight.txt",  row.names =F ) 
+
+########################## Already in Additional candidates
+#Zn_Role$PN25A_AA <- Zn_Role$resi1 
+#P25A_CP_Zndistances <- merge(P25A_CP,Zn_Role , by.x = "PN25A_AA")
+#P25A_CP_Zndistances_pKA <- merge(P25A_CP_Zndistances,P25_monomer_Pka ,by = "PN25A_AA")
+#View(P25A_CP_Zndistances_pKA[P25A_CP_Zndistances_pKA$MinPAE>0 &   P25A_CP_Zndistances_pKA$Locate != "BURIED"  ,])
+
+```
+
+<!--
 # Computational Domain Annotation 
 
 ```{r, eval=FALSE}
@@ -487,46 +795,6 @@ distance #1.1/a:137@CA #1.2/b@C14 ; distance #1.1/a:174@OG #1.2/b@O6 ; distance 
 save "~/Documents/GitHub/TpUGT89B1_Docking/Figures/TpUGT89B1_HydrophobicPocket.png" supersample 4 width 4000 height 4000
 save "~/Documents/GitHub/TpUGT89B1_Docking/Figures/TpUGT89B1_Docking-Hp.cxs" 
 ```
-
-
-## Evolutionary conservation of binding residues
-
-
-https://www.ebi.ac.uk/jdispatcher/psa/emboss_needle/summary?jobId=emboss_needle-I20260409-113910-0511-5011325-p1m
-https://www.rcsb.org/3d-sequence/5TMD?assemblyId=1
-
-```{bash, eval=F}
-# Tl binding positions of  OsUGT79
-#22,25,28,80,123,144,190,200,203,293,385
-#143,144, absent in query, change to 140,150
-
-# UDP binding of OsUGT79
-#29,30,143,144,291,293,345,347,365,370,387-->
-# Tl initial 
-python3 aa_equivalence_needle.py OsUGT79_Q7XT97_TbUGT89B.out 22,25,28,80,123,144,190,200,203,293,385 TtoQ 
-# Tl  final 
-python3 aa_equivalence_needle.py OsUGT79_Q7XT97_TbUGT89B.out 22,24,28,70,85,123,140,190,200,203,293,385 TtoQ
-python3 aa_equivalence_needle.py OsUGT79_Q7XT97_TbUGT89B.out  129,133,137,140,174,176,376,377 QtoT
-```
-
-seq1_name | seq2_name | direction | source_pos | equivalent_pos | source_aa | equivalent_aa | state | query_pos | target_pos | query_aa | target_aa |
- --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-TbUGT89B    |    OsUGT79 |QtoT  |  129  |   169 |    S   |    R     |  match  | 129 |    169   |  S   |    R|
-TbUGT89B     |   OsUGT79 |QtoT  |  133  |   173  |   A  |     A     |  match  | 133  |   173  |   A    |   A|
-TbUGT89B      |  OsUGT79 |QtoT  |  137  |   NA  |    S  |     -     |  query_only  |    137 |    NA   |   S     |  -|
-TbUGT89B    |    OsUGT79 |QtoT  |  140  |   NA   |   L  |     -     |  query_only |     140  |   NA   |   L    |   -|
-TbUGT89B    |    OsUGT79 |QtoT  |  174  |   196 |    S   |    T     |  match  | 174 |    196 |    S    |   T|
-TbUGT89B    |    OsUGT79 |QtoT  |  176  |   198  |   L  |     A     |  match  | 176  |   198  |   L    |   A|
-TbUGT89B    |    OsUGT79 |QtoT  |  376  |   384 |    A   |    A     |  match  | 376 |    384  |   A     |  A|
-TbUGT89B    |    OsUGT79 | QtoT |  377  |   385  |   D  |     D     |  match  | 377  |   385  |   D     |  D |
-
-
-```{bash, eval=F}
-# UDP initial 
-python3 aa_equivalence_needle.py OsUGT79_Q7XT97_TbUGT89B.out 29,30,143,144,291,293,345,347,365,370,387 TtoQ 
-
-# UDP final 
- python3 aa_equivalence_needle.py OsUGT79_Q7XT97_TbUGT89B.out 29,30,155,160,291,293,345,347,365,370,387 TtoQ
-```
+--> 
 
 # References 

@@ -1,0 +1,30 @@
+[{
+    "sequences": [
+        {
+            "proteinChain": {
+                "sequence": "MGDILGAVYDLGHRPYLARRTVYEDRLILSTHGNICRAINLLTHDNRTTLVYHNNTKRIRFRGLLCALHGPYCGFRALCRVMLCSLPRLCDIPINGSRDFVADPTRLDSSVNELLVSNGLVIHYDRVHHVPLHTDGFEVVDFTTVFRGPGNFLLPNATNFPRPTTTDQVYMVCLVNTVNCVLRFESELTVWVHSGLYTGDVLDVDNNVIQAPDGVDDDG",
+                "count": 2
+            }
+        },
+        {
+            "dnaSequence": {
+                "sequence": "TTCGTGGCCGGAAAGAGGCAAAAGAAGACTAGCTTACACCTCATGGGGGTCAAGCAAGAGAAGAATGAAAGTCTAGCCGACTACATAAAAAGA",
+                "count": 1 
+            }
+        },
+        {
+            "dnaSequence": {
+                "sequence": "TCTTTTTATGTAGTCGGCTAGACTTTCATTCTTCTCTTGCTTGACCCCCATGAGGTGTAAGCTAGTCTTCTTTTGCCTCTTTCCGGCCACGAA",
+                "count": 1
+            }
+        },
+        {
+            "ion": {
+                "ion": "ZN",
+                "count": 2
+            }
+        }
+    ],
+    "name": "Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA"
+}
+]
