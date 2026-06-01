@@ -319,11 +319,11 @@ height: 100%"/>
 # Interaction surface index analysis 
 
 ```{r, eval=FALSE}
-P25_dsDNA_0 <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_0_pae.csv.gz", header = FALSE))
-P25_dsDNA_1 <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_1_pae.csv.gz", header = FALSE))
-P25_dsDNA_2 <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_2_pae.csv.gz", header = FALSE))
-P25_dsDNA_3 <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_3_pae.csv.gz", header = FALSE))
-P25_dsDNA_4 <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_4_pae.csv.gz", header = FALSE))
+P25_dsDNA_0 <- as.matrix(read.csv("CP_PAE_PDE/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_0_pae.csv.gz", header = FALSE))
+P25_dsDNA_1 <- as.matrix(read.csv("CP_PAE_PDE/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_1_pae.csv.gz", header = FALSE))
+P25_dsDNA_2 <- as.matrix(read.csv("CP_PAE_PDE/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_2_pae.csv.gz", header = FALSE))
+P25_dsDNA_3 <- as.matrix(read.csv("CP_PAE_PDE/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_3_pae.csv.gz", header = FALSE))
+P25_dsDNA_4 <- as.matrix(read.csv("CP_PAE_PDE/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_full_data_sample_4_pae.csv.gz", header = FALSE))
 
 model_list <- list(t(P25_dsDNA_0),t( P25_dsDNA_1), t(P25_dsDNA_2), t(P25_dsDNA_3), t(P25_dsDNA_4))
 
@@ -356,17 +356,36 @@ P25Ad_dsDNA_DF_summary$Interaction<- factor(P25Ad_dsDNA_DF_summary$Interaction, 
                                                                                "P25B binding to 93bp dsDNA", 
                                                                                "P25A binding to 2Zn"))
 
-P25d_dsDNA_all_plot <-  ggplot(P25Ad_dsDNA_DF_summary, aes(x = Residue, y = mean_value ,  colour =Interaction)) +
-           scale_colour_viridis_d(-1)  +   geom_line(size = 0.8, linetype = "solid") +
-geom_ribbon(aes(ymin = mean_value - se_value, ymax = mean_value + se_value), alpha = 0.2, colour = NA ) +
-    labs(title = "PAE P25 dimer binding to dsDNA",
-         x = "P25 Residue", y = "Expected Position Error (Å)",
-         color = "Interaction") +  theme_classic(base_size = 16)  +
-  scale_x_continuous(breaks = seq(1, length(P25Ad_dsDNA_DF_summary$Residue), by = 5)) + 
+P25d_dsDNA_all_plot <- ggplot(P25Ad_dsDNA_DF_summary, aes(x = Residue, y = mean_value  ,  colour =Interaction)) +
+     scale_colour_viridis_d()  +   geom_line(size = 0.8, linetype = "solid") +
+  geom_ribbon(aes(ymin = mean_value - se_value, ymax = mean_value + se_value), alpha = 0.2, colour = NA ) +
+     labs(title = "PAE P25 dimer binding to dsDNA",
+          x = "P25 Residue", y = "Expected Position Error (Å)",
+          color = "Interaction") +  theme_classic(base_size = 16)  +
+     #scale_x_continuous(breaks = seq(1, length(P25Ad_dsDNA_DF_summary$Residue), by = 5)) + 
      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),plot.title = element_text(hjust = 0.5),legend.position = "bottom") +
-  facet_grid(Interaction~., scales = "free")  
+     facet_grid(Interaction~., scales = "free")  
 
-  ggsave(filename = "../Figures/ViralTFs_BNYVV_P25_pae_plot.svg", plot = P25d_dsDNA_all_plot,device = "svg", width=12, height=12)
+ggsave(filename = "Figures/ViralTFs_BNYVV_P25_pae_plot.svg", plot = P25d_dsDNA_all_plot,device = "svg", width=12, height=12)
+
+
+
+P25Ad_dsDNA_DF_ALL$Interaction<- factor(P25Ad_dsDNA_DF_ALL$Interaction, levels = c("P25A binding to P25B",
+                                                                               "P25A binding to 93bp dsDNA",
+                                                                               "P25B binding to 93bp dsDNA", 
+                                                                               "P25A binding to 2Zn"))
+P25d_dsDNA_independent_plot <-  ggplot(P25Ad_dsDNA_DF_ALL, aes(x = Residue, y = MinPAE  ,  colour =Model)) +
+           scale_colour_viridis_d()  +   geom_line(size = 0.8, linetype = "solid") +
+    labs(x = "P25 Residue", y = "Expected Position Error (Å)",
+         color = "Model") +  
+ # scale_x_continuous(breaks = seq(1, length(P25Ad_dsDNA_DF_summary$Residue), by = 5)) + 
+   theme_bw(base_size = 20) +
+     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+           legend.position = "bottom",
+    strip.background = element_blank()) +
+  facet_grid(Interaction~., scales = "free")  
+  ggsave(filename = "Figures/ViralTFs_BNYVV_P25_pae_plot.pdf", plot = P25d_dsDNA_independent_plot,device = "pdf", width=6, height=5)
+
 
 ```
 ::: {style="text-align: center;"}
@@ -417,7 +436,7 @@ colsplit_nt_seq <- strsplit(nt_seq, "")[[1]]
 colsplit_number <- paste0(seq(1,626), colsplit, sep="")
 colsplit_nt_seq_number <- paste0(seq(1,188), colsplit_nt_seq, sep="")
 
-P25_dimer_2Zn_dsDNA_1  <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_contactProb_m1.csv", header = FALSE))
+P25_dimer_2Zn_dsDNA_1  <- as.matrix(read.csv("CP_PAE_PDE/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_contactProb_m1.csv", header = FALSE))
 model_list <- list(t(P25_dimer_2Zn_dsDNA_1))
 
 #BNYVV_P25A_dsDNA_CP <- process_contactP_models_indexing(model_list, 439:532,1:219,"P25A binding to 93bp dsDNA","Unique")
@@ -457,24 +476,25 @@ BNYVV_P25d_dsDNA$Interaction<- factor(BNYVV_P25d_dsDNA$Interaction, levels = c("
                                                                                "P25A binding to 2Zn"))
 BNYVV_P25d_dsDNA_plot <- ggplot(BNYVV_P25d_dsDNA[BNYVV_P25d_dsDNA$MinPAE > 0,], aes(x = Residue, y = MinPAE ,  fill =Interaction)) +
      #scale_color_manual(values = colors) + 
-      scale_fill_viridis_d(-1)  +  
+      scale_fill_viridis_d()  +  
   #geom_line(size = 0.8, linetype = "solid") +
  geom_col() + 
-    geom_text_repel(aes(label =ifelse(MinPAE < 0.4 & MinPAE > 0.05 , InterName , NA)), # index < 25 for P6B
-                  segment.size = 0.3)  + 
-    labs(title = "Contact probabilities P25 dimer binding to dsDNA and  2Zn²⁺\nfor top model",
-         x = "P25 Residue", y = "Contact probabilities",
-         color = "Interaction") +  theme_classic(base_size = 16)  +
+    # geom_text_repel(aes(label =ifelse(MinPAE < 0.4 & MinPAE > 0.05 , InterName , NA)),segment.size = 0.3)  +   # index < 25 for P6B
+    labs(x = "P25 Residue", y = "Contact probabilities",
+         color = "Interaction") + 
   #scale_x_continuous(breaks = seq(1, length(P6dimmer$Residue), by = 5)) + 
-     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),plot.title = element_text(hjust = 0.5),legend.position = "bottom") + 
-     facet_grid(Interaction~., scales = "free_y")  +
-  #scale_y_continuous(breaks = seq(0, 1, by = 0.02))  +
+   theme_bw(base_size = 20) +
+     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+           legend.position = "bottom",strip.text.y = element_blank(),
+    strip.background = element_blank()) +
+     facet_grid(Interaction~., scales = "free_y") 
+  #scale_y_continuous(breaks = seq(0, 1, by = 0.05))  +
   # keep defaults and add highlight_residues as extra breaks
-  scale_x_continuous(breaks = function(x) {
-    unique(c(pretty(x), highlight_residues))
-  })          
+  #scale_x_continuous(breaks = function(x) { unique(c(pretty(x), highlight_residues)) })          
 
- ggsave(filename = "../Figures/ViralTFs_BNYVV_P25_CP_plot.svg", plot = BNYVV_P25d_dsDNA_plot,device = "svg", width=18, height=12)
+ ggsave(filename = "Figures/ViralTFs_BNYVV_P25_CP_plot.svg", plot = BNYVV_P25d_dsDNA_plot,device = "svg", width=18, height=12)
+ 
+ ggsave(filename = "Figures/ViralTFs_BNYVV_P25_CP_plot.pdf", plot = BNYVV_P25d_dsDNA_plot,device = "pdf", width=6, height=5)
 ```
 
 ::: {style="text-align: center;"}
@@ -502,7 +522,7 @@ height: 100%"/>
 colsplit <- strsplit(colnames_seq, "")[[1]]
 colsplit_number <- paste0(seq(1,626), colsplit, sep="")
 
-P25_dimer_2Zn_dsDNA_1 <- as.matrix(read.csv("ProtenixModels/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_contactProb_m1.csv", header = FALSE))
+P25_dimer_2Zn_dsDNA_1 <- as.matrix(read.csv("CP_PAE_PDE/Protenix_BNYVV_P25_P19229_dimer_2Zn_dsDNA_contactProb_m1.csv", header = FALSE))
 
 model_list <- list(t(P25_dimer_2Zn_dsDNA_1))
 
@@ -614,8 +634,19 @@ To verify distance calculation, the model was loaded on ChimeraX, using the foll
 # https://www.rbvi.ucsf.edu/chimerax/docs/user/tutorials/binding-sites.html
 
 split #1
+coulombic
+transparency #1.3 90 surfaces
+transparency #1.4 90 surfaces
+transparency #1.4 100 atoms
+transparency #1.3 100 atoms
+transparency #1.3 100 ribbons
+transparency #1.4 100 ribbons
 distance #1.2/b:161@CA #1.3/c:35@P 
 distance #1.2/b:161@N #1.3/c:35@P 
+color byattribute bfactor #1.1 palette 50,orange:70,yellow:80,green:90,darkgreen
+
+save C:/Users/Slaym/Documents/GitHub/B25_ViralTF/CIF/BNYVV_P25_Local_dimer_2Zn_dsDNA_seed_93187_m0.cxs
+
 
 # To show all distances 
 contacts #1.1/a:161 #1.3/c:56 reveal t showdist t;  label height 1; 
@@ -727,6 +758,99 @@ Additional_Candidates<- No_Candidates[No_Candidates$MinPAE_Index > 0 & No_Candid
 #P25A_CP_Zndistances_pKA <- merge(P25A_CP_Zndistances,P25_monomer_Pka ,by = "PN25A_AA")
 #View(P25A_CP_Zndistances_pKA[P25A_CP_Zndistances_pKA$MinPAE>0 &   P25A_CP_Zndistances_pKA$Locate != "BURIED"  ,])
 
+```
+
+
+```{r, eval=FALSE}
+
+library(readr)
+library(dplyr)
+library(grid)
+library(gridExtra)
+
+
+input_file <- "Results/CPRaa_Residues.csv"
+
+output_file <- "CPRaa_Residues_table.pdf"
+
+# Read table
+df <- read_csv(input_file, show_col_types = FALSE)
+
+# Clean column names for display
+colnames(df) <- c(
+  "Residue",
+  "Contact\nprobability",
+  "Interacting\nNT",
+  "Distance\n(Å)",
+  "pKa",
+  "Location"
+)
+
+# Optional: format numeric columns
+df <- df %>%
+  mutate(
+    `Contact\nprobability` = sprintf("%.2f", `Contact\nprobability`),
+    `Distance\n(Å)` = sprintf("%.2f", `Distance\n(Å)`),
+    pKa = sprintf("%.2f", pKa)
+  )
+
+# PNAS-like minimalist theme: no vertical grid-heavy look
+table_theme <- ttheme_minimal(
+  core = list(
+    fg_params = list(fontsize = 9),
+    padding = unit(c(4, 4), "mm")
+  ),
+  colhead = list(
+    fg_params = list(fontsize = 9, fontface = "bold"),
+    padding = unit(c(4, 4), "mm")
+  )
+)
+
+# Create table grob
+tab <- tableGrob(
+  df,
+  rows = NULL,
+  theme = table_theme
+)
+
+# Add horizontal rules, closer to journal/booktabs style
+tab <- gtable::gtable_add_grob(
+  tab,
+  grobs = segmentsGrob(
+    x0 = unit(0, "npc"),
+    x1 = unit(1, "npc"),
+    y0 = unit(0, "npc"),
+    y1 = unit(0, "npc"),
+    gp = gpar(lwd = 1)
+  ),
+  t = 1, l = 1, r = ncol(tab)
+)
+
+tab <- gtable::gtable_add_grob(
+  tab,
+  grobs = segmentsGrob(
+    x0 = unit(0, "npc"),
+    x1 = unit(1, "npc"),
+    y0 = unit(0, "npc"),
+    y1 = unit(0, "npc"),
+    gp = gpar(lwd = 1)
+  ),
+  t = nrow(tab), l = 1, r = ncol(tab)
+)
+
+# Save as PDF
+pdf(output_file, width = 8.5, height = 4.5)
+grid.newpage()
+grid.text(
+  "Table 1. CPR amino acid residues and predicted nucleotide contacts",
+  x = 0.05, y = 0.95,
+  just = "left",
+  gp = gpar(fontsize = 11, fontface = "bold")
+)
+pushViewport(viewport(y = 0.47, height = 0.82))
+grid.draw(tab)
+popViewport()
+dev.off()
 ```
 
 <!--

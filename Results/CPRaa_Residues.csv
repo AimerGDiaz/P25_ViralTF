@@ -1,0 +1,17 @@
+﻿Residue,"Contact
+Probability","Interacting
+NT","Distance
+(Å)",pKa,Locate
+13H,0.05,492G,5.20,6.61,Surface
+14R,0.01,485G,4.99,12.01,Surface
+20R,0.03,475C,7.22,12.08,Surface
+20R,0.03,475C,9.53,12.08,Surface
+58R,0.04,584A,5.71,12.43,Surface
+58R,0.04,584A,6.99,12.43,Surface
+60R,0.08,585G,5.96,12.43,Surface
+62R,0.00,439T,9.92,12.50,Surface
+88R,0.00,439T,8.87,12.50,Surface
+88R,0.00,439T,8.32,12.50,Surface
+147R,0.00,439T,7.20,11.66,Surface
+162R,0.04,595A,3.72,12.50,Surface
+183R,0.00,439T,9.68,12.50,Surface
