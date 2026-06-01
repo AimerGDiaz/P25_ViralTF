@@ -1,0 +1,6 @@
+models	has_clash	ptm	iptm	ranking_score	num_recycles	fraction_disordered
+model_0	0.0	0.72	0.6	0.62	10.0	0.0
+model_1	0.0	0.69	0.42	0.47	10.0	0.0
+model_2	0.0	0.63	0.39	0.44	10.0	0.01
+model_3	0.0	0.64	0.34	0.42	10.0	0.04
+model_4	0.0	0.63	0.29	0.39	10.0	0.06
